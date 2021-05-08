@@ -1,0 +1,54 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks", "@typescript-eslint"],
+  "rules": {
+    "strict": "off",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "import/no-extraneous-dependencies": "off",
+    "camelcase": "off",
+    "no-confusing-arrow": "off",
+    "no-console": "warn",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "import/prefer-default-export": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-closing-bracket-location": "off",
+    "react/jsx-pascal-case": "off",
+    "react/prop-types": "off",
+    "react/style-prop-object": "off",
+    "react/require-default-props": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "implicit-arrow-linebreak": "off",
+    "lines-between-class-members": "off",
+    "react/destructuring-assignment": "off",
+    "arrow-parens": "off",
+    "react/self-closing-comp": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "consistent-return": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "prefer-promise-reject-errors": "off",
+    "react/no-danger": "error",
+    "react/jsx-props-no-spreading": "off"
+  }
+}
