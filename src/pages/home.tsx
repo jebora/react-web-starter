@@ -4,6 +4,6 @@ import { Page } from './page';
 export const Home = () => (
   <Page
     title="Home"
-    content="Welcome Home! This is some randome content. It can be anything, but it's a text for now."
+    content="Welcome Home! This is some random content. It can be anything, but it's a text for now."
   />
 );

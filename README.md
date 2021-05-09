@@ -1,6 +1,6 @@
 # React Web Starter
 
-Frontend boilerplate with React, Redux, React Router, Styled Components, etc.
+Frontend boilerplate with React, Redux, React Router, Styled Components, etc. This is mostly used for experimental fun stuff, or if you want to quickly spin off a react app with some goods set up and samples.
 
 ## Contains
 
@@ -23,7 +23,16 @@ Frontend boilerplate with React, Redux, React Router, Styled Components, etc.
 
 ## Available Scripts
 
-None
+None, but maybe soon
+
+## Todo
+
+- Add and use webpack
+- Add sample api lib
+- Add dependebot
+- Add semantic-release
+- Add some useful scripts
+- Add more todos...
 
 ### `yarn start`
 

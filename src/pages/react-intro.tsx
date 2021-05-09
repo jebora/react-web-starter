@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import logo from 'images/logo.svg';
+import { reactLogo } from 'images';
 
 const App = styled.div`
   text-align: center;
@@ -39,7 +39,7 @@ const Link = styled.a`
 export const ReactIntro = () => (
   <App>
     <AppHeader>
-      <AppLogo src={logo} className="App-logo" alt="logo" />
+      <AppLogo src={reactLogo} className="App-logo" alt="logo" />
       <p>
         Edit <code>src/App.tsx</code> and save to reload.
       </p>
