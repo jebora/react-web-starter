@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { configureStore } from './store';
+import { ConnectedRouter } from 'connected-react-router';
+import { configureStore, history } from './store';
 import logo from './logo.svg';
 import './App.css';
 
@@ -27,6 +28,8 @@ const AppView = () => (
 
 export const App = () => (
   <ReduxProvider store={store}>
-    <AppView />
+    <ConnectedRouter history={history}>
+      <AppView />
+    </ConnectedRouter>
   </ReduxProvider>
 );

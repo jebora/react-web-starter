@@ -1,8 +1,8 @@
 import type { Field } from './sample.types';
 
 export const actions = {
-  setField: 'rws::sample::setField',
-  reset: 'rws::sample::reset',
+  setField: 'RWS::SAMPLE::SET_FIELD',
+  reset: 'RWS::SAMPLE::RESET',
 };
 
 export const setField = (key: string, field: Field) => ({

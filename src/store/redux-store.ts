@@ -1,19 +1,21 @@
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import type { Store } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { rootReducer } from './root-reducer';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
+import { rootReducer, defaultState } from './root-reducer';
+import type { RootState } from './root-reducer';
 
-const middleware = [thunkMiddleware];
+export const history = createBrowserHistory();
 
-const enhancers = applyMiddleware(...middleware);
+const middleware = [thunkMiddleware, routerMiddleware(history)];
+const enhancers = composeWithDevTools(applyMiddleware(...middleware));
 
 let store: Store;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type State = { [id: string]: any };
-
-export const configureStore = (initialState: State = {}) => {
-  store = createStore(rootReducer, initialState, enhancers);
+export const configureStore = (initialState: RootState = defaultState) => {
+  store = createStore(rootReducer(history), initialState, enhancers);
   return { store };
 };
 

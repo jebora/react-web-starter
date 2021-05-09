@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { sampleReducerRoot } from './sample.reducer';
-import type { RootState } from '../root-reducer';
+import type { RootState } from 'store/root-reducer';
 
 const selectRoot = (state: RootState) => state[sampleReducerRoot];
 

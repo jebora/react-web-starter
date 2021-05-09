@@ -6,7 +6,7 @@ export type SampleState = {
   [id: string]: Field;
 };
 
-const initialState: SampleState = {};
+export const initialState: SampleState = {};
 
 export const sampleReducerRoot = 'sample';
 
