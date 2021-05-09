@@ -17,6 +17,8 @@ const LinkItem = styled.li`
   list-style-type: none;
   padding: 10px;
   white-space: nowrap;
+  color: inherit;
+  text-decoration: inherit;
 `;
 
 type NavItem = {

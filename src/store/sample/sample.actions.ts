@@ -10,4 +10,8 @@ export const setField = (key: string, field: Field) => ({
   payload: { [key]: field },
 });
 
-export const reset = () => ({ type: actions.reset });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const reset = (payload: any = {}) => ({
+  type: actions.reset,
+  payload,
+});

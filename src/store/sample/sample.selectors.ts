@@ -1,13 +1,15 @@
 import { createSelector } from 'reselect';
 import { sampleReducerRoot } from './sample.reducer';
-import type { RootState } from 'store/root-reducer';
 
-const selectRoot = (state: RootState) => state[sampleReducerRoot];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type State = { [x: string]: any };
 
-const selectFieldKey = (state: RootState, key: string) => key;
+export const selectSample = (state: State) => state[sampleReducerRoot];
+
+const selectFieldKey = (state: State, key: string) => key;
 
 export const selectField = createSelector(
-  selectRoot,
+  selectSample,
   selectFieldKey,
   (state, key) => state[key],
 );

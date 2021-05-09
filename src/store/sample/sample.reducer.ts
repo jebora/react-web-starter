@@ -21,7 +21,7 @@ export const sampleReducer: Reducer<SampleState, AnyAction> = (
         ...action.payload,
       };
     case actions.reset:
-      return {};
+      return action.payload;
     default:
       return state;
   }

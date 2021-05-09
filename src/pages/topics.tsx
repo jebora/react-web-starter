@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Switch,
   Route,
@@ -7,9 +8,17 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import styled from 'styled-components';
+import { reset, selectField, selectSample } from 'store/sample';
+import FRUITS from './fixtures/fruits.json';
 import { Page } from './page';
 
-const Text = styled.p``;
+const Container = styled.div``;
+
+const Text = styled.p`
+  font-weight: bold;
+`;
+
+const Description = styled.span``;
 
 type TopicParam = {
   fruit: string;
@@ -17,13 +26,21 @@ type TopicParam = {
 
 const Topic = () => {
   const { fruit } = useParams<TopicParam>();
+  const description = useSelector((state) => selectField(state, fruit));
 
-  return <Text>{fruit}</Text>;
+  return (
+    <Container>
+      <Text>{fruit}</Text>
+      <Description>{description}</Description>
+    </Container>
+  );
 };
 
 const TopicList = styled.ul`
   display: flex;
   flex-direction: row;
+  margin: 0;
+  padding: 0;
 `;
 
 const TopicItem = styled.li`
@@ -33,29 +50,27 @@ const TopicItem = styled.li`
   white-space: nowrap;
 `;
 
-const Container = styled.div``;
-
 const Header = styled.h3``;
 
 const Content = () => {
+  const sample = useSelector(selectSample);
   const { path, url } = useRouteMatch();
+
+  const topics: string[] = Object.keys(sample);
 
   return (
     <Container>
+      <Header>Please select a topic:</Header>
       <TopicList>
-        <TopicItem>
-          <Link to={`${url}/apples`}>Apples</Link>
-        </TopicItem>
-        <TopicItem>
-          <Link to={`${url}/bananas`}>Bananas</Link>
-        </TopicItem>
-        <TopicItem>
-          <Link to={`${url}/watermelon`}>Watermelon</Link>
-        </TopicItem>
+        {topics.map((topic) => (
+          <TopicItem key={topic}>
+            <Link to={`${url}/${topic}`}>{topic}</Link>
+          </TopicItem>
+        ))}
       </TopicList>
       <Switch>
         <Route exact path={path}>
-          <Header>Please select a topic</Header>
+          <p>Do you like fruits?</p>
         </Route>
         <Route path={`${path}/:fruit`} component={Topic} />
       </Switch>
@@ -63,4 +78,12 @@ const Content = () => {
   );
 };
 
-export const Topics = () => <Page title="Topics" content={<Content />} />;
+export const Topics = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(reset(FRUITS));
+  }, [dispatch]);
+
+  return <Page title="Topics" content={<Content />} />;
+};
