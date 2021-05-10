@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page } from './page';
+import { Page } from 'layouts/page';
 
 export const About = () => (
   <Page

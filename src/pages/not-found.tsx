@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { Page } from './page';
+import { Page } from 'layouts/page';
 
 const Container = styled.div``;
 

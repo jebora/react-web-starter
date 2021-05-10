@@ -9,8 +9,8 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 import { reset, selectField, selectSample } from 'store/sample';
+import { Page } from 'layouts/page';
 import FRUITS from './fixtures/fruits.json';
-import { Page } from './page';
 
 const Container = styled.div``;
 
@@ -41,10 +41,10 @@ const TopicList = styled.ul`
   flex-direction: row;
   margin: 0;
   padding: 0;
+  list-style-type: none;
 `;
 
 const TopicItem = styled.li`
-  textalign: center;
   list-style-type: none;
   padding: 10px;
   white-space: nowrap;
