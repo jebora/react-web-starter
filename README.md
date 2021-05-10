@@ -4,6 +4,10 @@ Frontend boilerplate with React, Redux, React Router, Styled Components, etc. Th
 
 ## Contains
 
+You'll need yarn
+
+`npm install --global yarn`
+
 ### Dependencies
 
 - axios
@@ -23,10 +27,6 @@ Frontend boilerplate with React, Redux, React Router, Styled Components, etc. Th
 - redux-devtools-extension
 - prettier
 
-## Available Scripts
-
-None, but maybe soon
-
 ## Todo
 
 - Add themes
@@ -36,6 +36,8 @@ None, but maybe soon
 - Add semantic-release
 - Add some useful scripts
 - Add more todos...
+
+## Available Scripts
 
 ### `yarn start`
 
