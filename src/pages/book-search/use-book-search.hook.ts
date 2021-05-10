@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 import axios from 'axios';
 import type { Canceler } from 'axios';
@@ -10,7 +10,7 @@ const QUERY_DEBOUNCE = 500;
 
 const transformDocsBooks = (docs: Doc[]): Book[] =>
   docs.map((doc: Doc) => ({
-    id: doc.key,
+    id: `${doc.key}-${Math.random()}`,
     title: doc.title,
     year: doc.first_publish_year,
     authors: doc.author_name || [],
@@ -18,7 +18,7 @@ const transformDocsBooks = (docs: Doc[]): Book[] =>
   }));
 
 export const useBookSearch = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
   const [books, setBooks] = useState<Book[]>([]);
@@ -26,14 +26,29 @@ export const useBookSearch = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [query, setQuery] = useState<string>('');
 
-  const onQueryChange = debounce((newQuery: string) => {
-    setQuery(newQuery);
-    setPageNumber(1);
-  }, QUERY_DEBOUNCE);
+  const observer = useRef<IntersectionObserver>();
+
+  const setLastBookRef = useCallback(
+    (node: HTMLLIElement | null) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver(
+        (entries: IntersectionObserverEntry[]) => {
+          if (entries[0].isIntersecting && hasMore) {
+            setPageNumber((prev) => prev + 1);
+          }
+        },
+      );
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore],
+  );
 
   useEffect(() => {
-    if (!query && books.length) setBooks([]);
-  }, [query, books]);
+    if (!query) setBooks([]);
+  }, [query]);
 
   useEffect(() => {
     if (!query) return;
@@ -53,9 +68,11 @@ export const useBookSearch = () => {
         const { data }: { data: BookSearchJSON } = res;
         const foundBooks = transformDocsBooks(data.docs);
 
-        setBooks(foundBooks);
-        setHasMore(foundBooks.length < data.num_found);
+        setBooks((prevBooks) => [...prevBooks, ...foundBooks]);
+        setHasMore(foundBooks.length > 0);
+
         setLoading(false);
+        setError(false);
       })
       .catch((e) => {
         if (axios.isCancel(e)) return;
@@ -64,7 +81,12 @@ export const useBookSearch = () => {
       });
 
     return () => cancel && cancel();
-  }, [books, query, pageNumber]);
+  }, [query, pageNumber]);
+
+  const onQueryChange = debounce((newQuery: string) => {
+    setQuery(newQuery);
+    setPageNumber(1);
+  }, QUERY_DEBOUNCE);
 
   return {
     query,
@@ -73,5 +95,6 @@ export const useBookSearch = () => {
     books,
     hasMore,
     onQueryChange,
+    setLastBookRef,
   };
 };

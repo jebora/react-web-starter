@@ -6,7 +6,7 @@ type State = { [x: string]: any };
 
 export const selectSample = (state: State) => state[sampleReducerRoot];
 
-const selectFieldKey = (state: State, key: string) => key;
+const selectFieldKey = (_: State, key: string) => key;
 
 export const selectField = createSelector(
   selectSample,

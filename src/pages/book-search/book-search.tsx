@@ -45,17 +45,28 @@ const List = styled.ul`
   flex-wrap: wrap;
 `;
 
-const FoundBook = ({ title, authors, year, subject }: Book) => (
-  <Card>
-    <Title>{title}</Title>
-    <Detail>{`Year: ${year}`}</Detail>
-    {!!authors.length && <Detail>{`Authors: ${authors.join(', ')}`}</Detail>}
-    {subject && <Detail>{`Subject: ${subject}`}</Detail>}
-  </Card>
+const FoundBook = React.forwardRef<HTMLLIElement, Book>(
+  ({ title, authors, year, subject }, ref) => (
+    <Card ref={ref}>
+      <Title>{title}</Title>
+      <Detail>{`Year: ${year}`}</Detail>
+      {!!authors.length && <Detail>{`Authors: ${authors.join(', ')}`}</Detail>}
+      {subject && <Detail>{`Subject: ${subject}`}</Detail>}
+    </Card>
+  ),
 );
 
+FoundBook.displayName = 'FoundBook';
+
 const SearchContent = () => {
-  const { query, books, onQueryChange, loading } = useBookSearch();
+  const {
+    query,
+    books,
+    onQueryChange,
+    setLastBookRef,
+    loading,
+    error,
+  } = useBookSearch();
   return (
     <>
       <SearchInput
@@ -63,11 +74,17 @@ const SearchContent = () => {
         placeholder="Search book..."
         onChange={(event) => onQueryChange(event.target.value)}
       />
+      {loading && <p>Loading...</p>}
+      {error && <p>Error...</p>}
       {!loading && query && !books.length && <p>No books found!</p>}
       <List>
-        {books.map((book: Book) => (
-          <FoundBook key={book.id} {...book} />
-        ))}
+        {books.map((book: Book, index: number) =>
+          index === books.length - 1 ? (
+            <FoundBook ref={setLastBookRef} key={book.id} {...book} />
+          ) : (
+            <FoundBook key={book.id} {...book} />
+          ),
+        )}
       </List>
     </>
   );
